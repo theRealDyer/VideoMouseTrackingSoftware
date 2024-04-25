@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwj5b74la1c8n"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_td2nj"]
+
+[node name="TestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 577.0
+offset_top = 320.0
+offset_right = 577.0
+offset_bottom = 320.0
+script = ExtResource("1_td2nj")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(1000, 500)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -437.0
+offset_top = -202.0
+offset_right = -397.0
+offset_bottom = -162.0
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LoadImage" type="Button" parent="."]
+layout_mode = 0
+offset_left = -463.0
+offset_top = -126.0
+offset_right = -365.0
+offset_bottom = -95.0
+text = "Load image"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 373.0
+offset_top = -211.0
+offset_right = 413.0
+offset_bottom = -171.0
+
+[node name="Label" type="Label" parent="ColorRect2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TextureRectWithDrop" type="TextureRect" parent="ColorRect2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="LoadImage" to="." method="_on_load_image_pressed"]
