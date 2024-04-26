@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwj5b74la1c8n"]
+[gd_scene load_steps=2 format=3 uid="uid://ccfrurnpdlwau"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_td2nj"]
+[ext_resource type="Script" path="res://mainVideoTest.gd" id="1_ixvjd"]
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ offset_left = 577.0
 offset_top = 320.0
 offset_right = 577.0
 offset_bottom = 320.0
-script = ExtResource("1_td2nj")
+script = ExtResource("1_ixvjd")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -21,25 +21,20 @@ file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
 layout_mode = 0
-offset_left = -29.0
-offset_top = -26.0
-offset_right = 11.0
-offset_bottom = 14.0
+offset_left = -385.0
+offset_top = -244.0
+offset_right = 375.0
+offset_bottom = 231.0
 
-[node name="TextureRect" type="TextureRect" parent="ColorRect"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="LoadImage" type="Button" parent="."]
+[node name="LoadVideo" type="Button" parent="."]
 layout_mode = 0
 offset_left = -55.0
 offset_top = 50.0
 offset_right = 43.0
 offset_bottom = 81.0
-text = "Load image"
+text = "Load video"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="pressed" from="LoadImage" to="." method="_on_load_image_pressed"]
+[connection signal="pressed" from="LoadVideo" to="." method="_on_load_image_pressed"]
