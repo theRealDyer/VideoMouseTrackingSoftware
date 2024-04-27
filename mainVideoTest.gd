@@ -49,4 +49,7 @@ func _input(event):
 		videoPlayer.stop()	
 		videoPlayer.finished.emit()
 		
+	if event.is_action_pressed("play-stop"):
+		_play_video()
+		
 	
