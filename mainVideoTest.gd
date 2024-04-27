@@ -6,6 +6,7 @@ extends Control
 @onready var start = $Start
 @onready var loop = $Loop
 @onready var zoom = $Zoom
+@onready var boundPos = videoBounds.global_position
 
 # Variables for moving zoomed video
 var dragging=false
@@ -19,7 +20,7 @@ func _ready():
 	zoom.connect("value_changed", _zoomed)
 	
 	videoPlayer.size=videoBounds.size
-	
+	#videoPlayer.pivot_offset=videoPlayer.size/2
 	
 func _on_load_image_pressed() -> void:
 	# $FileDialog.add_filter("*.webm ; WebM Video Files")
@@ -39,8 +40,16 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	zoom.show()
 
 func _zoomed(scale_factor:float) -> void:
+	var newPos=Vector2()
 	# increase the scale of the video
 	videoPlayer.scale=Vector2(scale_factor, scale_factor)
+	
+	# Keep video in frame
+	newPos.x = clamp(videoPlayer.global_position.x, boundPos.x-abs(videoBounds.size.x \
+				- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
+	newPos.y = clamp(videoPlayer.global_position.y, boundPos.y-abs(videoBounds.size.y \
+				- videoPlayer.size.y*videoPlayer.scale.y), boundPos.y)
+	videoPlayer.global_position=newPos
 
 func _loop_video() -> void:
 	# Loop video button
@@ -91,7 +100,6 @@ func _input(event) -> void:
 		if dragging:
 			# Move video to new position if holding mouse button
 			var newPos = event.position+dragOffset
-			var boundPos = videoBounds.global_position
 			# Bind video to viewing box		
 			newPos.x = clamp(newPos.x, boundPos.x-abs(videoBounds.size.x \
 						- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
@@ -101,6 +109,9 @@ func _input(event) -> void:
 			
 	if event.is_action_pressed('DEBUG'):
 		# TESTING PURPOSES
-		print(videoPlayer.position, videoBounds.size )
+		print(videoPlayer.global_position)
+		videoPlayer.scale=Vector2(2,2)
+		print(videoPlayer.global_position)
+		
 			
 	
