@@ -67,7 +67,6 @@ func _show_load_button() -> void:
 	zoom.hide()
 	
 
-
 func _input(event) -> void:
 	# Quit if pressing q
 	if event.is_action_pressed('quit'):
@@ -82,14 +81,18 @@ func _input(event) -> void:
 				event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			# Start dragging (Only if clicked on video space)
 			dragging=true
-			dragOffset=videoBounds.get_global_rect().position - event.position
+			dragOffset=videoPlayer.global_position - event.global_position
 		else:
 			dragging=false # Stop dragging
 			
 	elif event is InputEventMouseMotion:
 		if dragging:
 			# Move video to new position if holding mouse button
-			var newPos = event.global_position+dragOffset
-			videoPlayer.position=newPos
+			var newPos = event.position+dragOffset
+			videoPlayer.global_position=newPos
+			
+	if event.is_action_pressed('DEBUG'):
+		print(videoPlayer.global_position, videoPlayer.get_screen_position())
+		print(videoBounds.global_position, videoBounds)
 			
 	
