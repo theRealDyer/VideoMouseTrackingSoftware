@@ -30,13 +30,14 @@ offset_bottom = 231.0
 
 [node name="LoadVideo" type="Button" parent="."]
 layout_mode = 0
-offset_left = -55.0
+offset_left = -50.0
 offset_top = 50.0
-offset_right = 43.0
+offset_right = 48.0
 offset_bottom = 81.0
 text = "Load video"
 
 [node name="Start" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 21.0
 offset_top = 272.0
@@ -45,12 +46,22 @@ offset_bottom = 303.0
 text = "Play"
 
 [node name="Loop" type="CheckButton" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -86.0
 offset_top = 273.0
 offset_right = 1.0
 offset_bottom = 304.0
 text = "Loop"
+
+[node name="InitialZoom" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 292.0
+offset_right = 385.0
+offset_bottom = 308.0
+min_value = 1.0
+value = 1.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="LoadVideo" to="." method="_on_load_image_pressed"]

@@ -4,6 +4,7 @@ extends Control
 @onready var videoPlayer = $VideoStreamPlayer
 @onready var start = $Start
 @onready var loop = $Loop
+@onready var iZoom = $InitialZoom
 
 func _ready():
 	# Linking signals 
@@ -25,6 +26,8 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	videoPlayer.play()
 	videoPlayer.paused=true
 	$LoadVideo.hide()
+	start.show()
+	loop.show()
 
 func _loop_video() -> void:
 	# Loop video button
@@ -33,17 +36,21 @@ func _loop_video() -> void:
 	# Invert booleen
 	videoPlayer.loop=!is_looped
 	
+	loop.release_focus() # Ensures spacepress doesn't trigger button
+	
 func _play_video() -> void:
 	# Play/Pause button
 	var paused=videoPlayer.paused
 	# Invert state
 	videoPlayer.paused=!paused
 	
+	start.release_focus()# Ensures spacepress doesn't trigger button
+	
 
 func _show_load_button() -> void:
 	$LoadVideo.show()
 
-func _input(event):
+func _input(event) -> void:
 	# Quit if pressing q
 	if event.is_action_pressed('quit'):
 		videoPlayer.stop()	
@@ -51,5 +58,6 @@ func _input(event):
 		
 	if event.is_action_pressed("play-stop"):
 		_play_video()
+
 		
 	
