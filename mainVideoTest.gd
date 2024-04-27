@@ -73,10 +73,12 @@ func _input(event) -> void:
 		videoPlayer.stop()	
 		videoPlayer.finished.emit()
 		
+		
 	if event.is_action_pressed("play-stop"):
 		_play_video()
 
 	if event is InputEventMouseButton:
+		print(event.position)
 		if videoBounds.get_global_rect().has_point(event.position) and \
 				event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			# Start dragging (Only if clicked on video space)
@@ -89,10 +91,16 @@ func _input(event) -> void:
 		if dragging:
 			# Move video to new position if holding mouse button
 			var newPos = event.position+dragOffset
+			var boundPos = videoBounds.global_position
+			# Bind video to viewing box		
+			newPos.x = clamp(newPos.x, boundPos.x-abs(videoBounds.size.x \
+						- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
+			newPos.y = clamp(newPos.y, boundPos.y-abs(videoBounds.size.y \
+						- videoPlayer.size.y*videoPlayer.scale.y), boundPos.y)
 			videoPlayer.global_position=newPos
 			
 	if event.is_action_pressed('DEBUG'):
-		print(videoPlayer.global_position, videoPlayer.get_screen_position())
-		print(videoBounds.global_position, videoBounds)
+		# TESTING PURPOSES
+		print(videoPlayer.position, videoBounds.size )
 			
 	
