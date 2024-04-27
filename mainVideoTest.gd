@@ -21,6 +21,9 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	videoPlayer.stream = load(path) #  Load video
 	videoPlayer.expand=true # Fit into viewport
 	
+	# Load video frame but don't play until play button pressed
+	videoPlayer.play()
+	videoPlayer.paused=true
 	$LoadVideo.hide()
 
 func _loop_video() -> void:
@@ -32,10 +35,9 @@ func _loop_video() -> void:
 	
 func _play_video() -> void:
 	# Play/Pause button
-	if !videoPlayer.is_playing():
-		videoPlayer.play()
-	else:
-		videoPlayer.stop()
+	var paused=videoPlayer.paused
+	# Invert state
+	videoPlayer.paused=!paused
 	
 
 func _show_load_button() -> void:
