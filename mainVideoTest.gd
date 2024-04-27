@@ -2,9 +2,14 @@ extends Control
 
 # Get references to button nodes & Video node
 @onready var videoPlayer = $VideoBounds/VideoStreamPlayer
+@onready var videoBounds = $VideoBounds
 @onready var start = $Start
 @onready var loop = $Loop
 @onready var zoom = $Zoom
+
+# Variables for moving zoomed video
+var dragging=false
+var dragOffset=Vector2()
 
 func _ready():
 	# Linking signals 
@@ -13,9 +18,9 @@ func _ready():
 	loop.connect("pressed", _loop_video)
 	zoom.connect("value_changed", _zoomed)
 	
+	videoPlayer.size=videoBounds.size
 	
 	
-
 func _on_load_image_pressed() -> void:
 	# $FileDialog.add_filter("*.webm ; WebM Video Files")
 	$FileDialog.add_filter("*.ogv ; OGV Video Files")
@@ -40,8 +45,7 @@ func _zoomed(scale_factor:float) -> void:
 func _loop_video() -> void:
 	# Loop video button
 	var is_looped = videoPlayer.loop
-	
-	# Invert booleen
+	# Invert state
 	videoPlayer.loop=!is_looped
 	
 	loop.release_focus() # Ensures spacepress doesn't trigger button
@@ -63,6 +67,7 @@ func _show_load_button() -> void:
 	zoom.hide()
 	
 
+
 func _input(event) -> void:
 	# Quit if pressing q
 	if event.is_action_pressed('quit'):
@@ -72,5 +77,19 @@ func _input(event) -> void:
 	if event.is_action_pressed("play-stop"):
 		_play_video()
 
-		
+	if event is InputEventMouseButton:
+		if videoBounds.get_global_rect().has_point(event.position) and \
+				event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			# Start dragging (Only if clicked on video space)
+			dragging=true
+			dragOffset=videoBounds.get_global_rect().position - event.position
+		else:
+			dragging=false # Stop dragging
+			
+	elif event is InputEventMouseMotion:
+		if dragging:
+			# Move video to new position if holding mouse button
+			var newPos = event.global_position+dragOffset
+			videoPlayer.position=newPos
+			
 	
