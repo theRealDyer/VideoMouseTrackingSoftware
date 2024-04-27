@@ -1,10 +1,50 @@
 extends Control
 
+# Get references to button nodes & Video node
+@onready var videoPlayer = $VideoStreamPlayer
+@onready var start = $Start
+@onready var loop = $Loop
+
+func _ready():
+	# Linking signals 
+	videoPlayer.connect("finished", _show_load_button)
+	start.connect("pressed", _play_video)
+	loop.connect("pressed", _loop_video)
+	
+
 func _on_load_image_pressed() -> void:
 	# $FileDialog.add_filter("*.webm ; WebM Video Files")
 	$FileDialog.add_filter("*.ogv ; OGV Video Files")
 	$FileDialog.popup()
 
 func _on_file_dialog_file_selected(path: String) -> void:
-	$VideoStreamPlayer.stream = load(path)
-	$VideoStreamPlayer.play()
+	videoPlayer.stream = load(path) #  Load video
+	videoPlayer.expand=true # Fit into viewport
+	
+	$LoadVideo.hide()
+
+func _loop_video() -> void:
+	# Loop video button
+	var is_looped = videoPlayer.loop
+	
+	# Invert booleen
+	videoPlayer.loop=!is_looped
+	
+func _play_video() -> void:
+	# Play/Pause button
+	if !videoPlayer.is_playing():
+		videoPlayer.play()
+	else:
+		videoPlayer.stop()
+	
+
+func _show_load_button() -> void:
+	$LoadVideo.show()
+
+func _input(event):
+	# Quit if pressing q
+	if event.is_action_pressed('quit'):
+		videoPlayer.stop()	
+		videoPlayer.finished.emit()
+		
+	
