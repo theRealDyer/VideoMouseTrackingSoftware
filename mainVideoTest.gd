@@ -1,16 +1,19 @@
 extends Control
 
 # Get references to button nodes & Video node
-@onready var videoPlayer = $VideoStreamPlayer
+@onready var videoPlayer = $VideoBounds/VideoStreamPlayer
 @onready var start = $Start
 @onready var loop = $Loop
-@onready var iZoom = $InitialZoom
+@onready var zoom = $Zoom
 
 func _ready():
 	# Linking signals 
 	videoPlayer.connect("finished", _show_load_button)
 	start.connect("pressed", _play_video)
 	loop.connect("pressed", _loop_video)
+	zoom.connect("value_changed", _zoomed)
+	
+	
 	
 
 func _on_load_image_pressed() -> void:
@@ -28,6 +31,11 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	$LoadVideo.hide()
 	start.show()
 	loop.show()
+	zoom.show()
+
+func _zoomed(scale_factor:float) -> void:
+	# increase the scale of the video
+	videoPlayer.scale=Vector2(scale_factor, scale_factor)
 
 func _loop_video() -> void:
 	# Loop video button
@@ -45,10 +53,15 @@ func _play_video() -> void:
 	videoPlayer.paused=!paused
 	
 	start.release_focus()# Ensures spacepress doesn't trigger button
-	
 
 func _show_load_button() -> void:
 	$LoadVideo.show()
+	
+	# Hide video tools when no video
+	start.hide()
+	loop.hide()
+	zoom.hide()
+	
 
 func _input(event) -> void:
 	# Quit if pressing q

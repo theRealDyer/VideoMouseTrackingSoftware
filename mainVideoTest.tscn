@@ -21,12 +21,18 @@ file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-layout_mode = 0
+[node name="VideoBounds" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
 offset_left = -385.0
 offset_top = -244.0
 offset_right = 375.0
 offset_bottom = 231.0
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VideoBounds"]
+layout_mode = 0
+offset_right = 760.0
+offset_bottom = 475.0
 
 [node name="LoadVideo" type="Button" parent="."]
 layout_mode = 0
@@ -54,13 +60,16 @@ offset_right = 1.0
 offset_bottom = 304.0
 text = "Loop"
 
-[node name="InitialZoom" type="HSlider" parent="."]
+[node name="Zoom" type="HSlider" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 210.0
 offset_top = 292.0
 offset_right = 385.0
 offset_bottom = 308.0
 min_value = 1.0
+max_value = 10.0
+step = 0.1
 value = 1.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
