@@ -2,7 +2,7 @@ extends Control
 
 @onready var videoPlayer = $VideoStreamPlayer
 @onready var boundSize = self.size # Bounding box position
-@onready var localRect = Rect2(Vector2(0,0), self.get_rect().size)
+@onready var localRect = Rect2(Vector2.ZERO, self.get_rect().size)
 
 @onready var zoom = $"../Zoom"
 
@@ -47,17 +47,26 @@ func _input(event):
 			# Move video to new position if holding mouse button
 			var newPos = event.position+dragOffset
 			#print(videoPlayer.position, newPos)
-			var minPos = Vector2(self.size.x \
-						- videoPlayer.size.x*videoPlayer.scale.x, 
-								self.size.y \
-						- videoPlayer.size.y*videoPlayer.scale.y) 
+			var minPos = self.get_rect().size - videoPlayer.get_rect().size
+			var maxPos = -minPos
 			# Bind video to viewing box		
-			print(minPos)
-			newPos = newPos.clamp(Vector2(0,0), minPos)
+			#print(minPos)
+
+			newPos = newPos.clamp(minPos/2, maxPos/2)
+				
 
 			videoPlayer.position=newPos
+			print(videoPlayer.position)
+			print(videoPlayer.get_rect().position)
 
 			
 	if event.is_action_pressed("DEBUG"):
-		print(videoPlayer.position)
+		var minPos = self.get_rect().size - videoPlayer.get_rect().size
+		print("video rect size ", videoPlayer.get_rect().size)
+		print("video rect position ", videoPlayer.get_rect().position)		
+		print("Min position", minPos)
+		
+		var test = Vector2(-500, -300)
+		print(test.clamp(minPos, Vector2.ZERO))
+		
 		
