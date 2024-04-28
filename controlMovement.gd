@@ -13,20 +13,21 @@ var dragOffset=Vector2()
 
 func _ready():
 	zoom.connect("value_changed", _zoomed)
-
+	
+	videoPlayer.size=self.size
+	videoPlayer.pivot_offset=self.size/2 # Allows expansion from centre
 
 
 func _zoomed(scale_factor:float) -> void:
-	var newPos=Vector2()
 	# increase the scale of the video
 	videoPlayer.scale=Vector2(scale_factor, scale_factor)
+	print(videoPlayer.pivot_offset, videoPlayer.get_rect().position)
 	
-	### Keep video in frame
-	#videoPlayer.global_position.x = clamp(videoPlayer.global_position.x, boundPos.x-abs(videoBounds.size.x \
-				#- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
-	#videoPlayer.global_position.y = clamp(videoPlayer.global_position.y, boundPos.y-abs(videoBounds.size.y \
-				#- videoPlayer.size.y*videoPlayer.scale.y), boundPos.y)
-	#videoPlayer.global_position=newPos
+	#### Keep video in frame
+	var minPos = self.get_rect().size - videoPlayer.get_rect().size
+	var maxPos = -minPos
+	videoPlayer.position=videoPlayer.position.clamp(minPos, maxPos)
+	
 
 func _input(event):
 	event = make_input_local(event) # convert to local coords
@@ -56,8 +57,7 @@ func _input(event):
 				
 
 			videoPlayer.position=newPos
-			print(videoPlayer.position)
-			print(videoPlayer.get_rect().position)
+			print(videoPlayer.pivot_offset)
 
 			
 	if event.is_action_pressed("DEBUG"):

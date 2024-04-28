@@ -17,10 +17,7 @@ func _ready():
 	videoPlayer.connect("finished", _show_load_button)
 	start.connect("pressed", _play_video)
 	loop.connect("pressed", _loop_video)
-	#zoom.connect("value_changed", _zoomed)
-	
-	videoPlayer.size=videoBounds.size
-	videoPlayer.pivot_offset=videoPlayer.size/2 # Allows expansion from centre
+
 	
 func _on_load_image_pressed() -> void:
 	# $FileDialog.add_filter("*.webm ; WebM Video Files")
