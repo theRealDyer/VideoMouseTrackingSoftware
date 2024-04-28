@@ -17,10 +17,10 @@ func _ready():
 	videoPlayer.connect("finished", _show_load_button)
 	start.connect("pressed", _play_video)
 	loop.connect("pressed", _loop_video)
-	zoom.connect("value_changed", _zoomed)
+	#zoom.connect("value_changed", _zoomed)
 	
 	videoPlayer.size=videoBounds.size
-	#videoPlayer.pivot_offset=videoPlayer.size/2
+	videoPlayer.pivot_offset=videoPlayer.size/2 # Allows expansion from centre
 	
 func _on_load_image_pressed() -> void:
 	# $FileDialog.add_filter("*.webm ; WebM Video Files")
@@ -31,6 +31,9 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	videoPlayer.stream = load(path) #  Load video
 	videoPlayer.expand=true # Fit into viewport
 	
+	videoPlayer.global_position = videoBounds.global_position
+	videoPlayer.size = videoBounds.size
+	
 	# Load video frame but don't play until play button pressed
 	videoPlayer.play()
 	videoPlayer.paused=true
@@ -38,18 +41,6 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	start.show()
 	loop.show()
 	zoom.show()
-
-func _zoomed(scale_factor:float) -> void:
-	var newPos=Vector2()
-	# increase the scale of the video
-	videoPlayer.scale=Vector2(scale_factor, scale_factor)
-	
-	# Keep video in frame
-	newPos.x = clamp(videoPlayer.global_position.x, boundPos.x-abs(videoBounds.size.x \
-				- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
-	newPos.y = clamp(videoPlayer.global_position.y, boundPos.y-abs(videoBounds.size.y \
-				- videoPlayer.size.y*videoPlayer.scale.y), boundPos.y)
-	videoPlayer.global_position=newPos
 
 func _loop_video() -> void:
 	# Loop video button
@@ -86,32 +77,3 @@ func _input(event) -> void:
 	if event.is_action_pressed("play-stop"):
 		_play_video()
 
-	if event is InputEventMouseButton:
-		print(event.position)
-		if videoBounds.get_global_rect().has_point(event.position) and \
-				event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			# Start dragging (Only if clicked on video space)
-			dragging=true
-			dragOffset=videoPlayer.global_position - event.global_position
-		else:
-			dragging=false # Stop dragging
-			
-	elif event is InputEventMouseMotion:
-		if dragging:
-			# Move video to new position if holding mouse button
-			var newPos = event.position+dragOffset
-			# Bind video to viewing box		
-			newPos.x = clamp(newPos.x, boundPos.x-abs(videoBounds.size.x \
-						- videoPlayer.size.x*videoPlayer.scale.x), boundPos.x)
-			newPos.y = clamp(newPos.y, boundPos.y-abs(videoBounds.size.y \
-						- videoPlayer.size.y*videoPlayer.scale.y), boundPos.y)
-			videoPlayer.global_position=newPos
-			
-	if event.is_action_pressed('DEBUG'):
-		# TESTING PURPOSES
-		print(videoPlayer.global_position)
-		videoPlayer.scale=Vector2(2,2)
-		print(videoPlayer.global_position)
-		
-			
-	
