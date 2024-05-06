@@ -1,14 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccfrurnpdlwau"]
+[gd_scene load_steps=3 format=3 uid="uid://ccfrurnpdlwau"]
 
 [ext_resource type="Script" path="res://mainVideoTest.gd" id="1_ixvjd"]
+[ext_resource type="Script" path="res://controlMovement.gd" id="2_4yprk"]
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 577.0
-offset_top = 320.0
-offset_right = 577.0
-offset_bottom = 320.0
 script = ExtResource("1_ixvjd")
 
 [node name="FileDialog" type="FileDialog" parent="."]
@@ -21,12 +18,28 @@ file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-layout_mode = 0
-offset_left = -385.0
-offset_top = -244.0
-offset_right = 375.0
-offset_bottom = 231.0
+[node name="VideoBounds" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
+offset_left = 192.0
+offset_top = 64.0
+offset_right = 958.0
+offset_bottom = 512.0
+script = ExtResource("2_4yprk")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VideoBounds"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -367.5
+offset_top = -225.0
+offset_right = -367.5
+offset_bottom = -225.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LoadVideo" type="Button" parent="."]
 layout_mode = 0
@@ -37,6 +50,7 @@ offset_bottom = 293.0
 text = "Load video"
 
 [node name="Start" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 21.0
 offset_top = 272.0
@@ -54,11 +68,12 @@ text = "Stop
 "
 
 [node name="Loop" type="CheckButton" parent="."]
+visible = false
 layout_mode = 0
-offset_left = -86.0
-offset_top = 273.0
-offset_right = 1.0
-offset_bottom = 304.0
+offset_left = 488.0
+offset_top = 593.0
+offset_right = 575.0
+offset_bottom = 624.0
 text = "Loop"
 
 [node name="DropDown" type="OptionButton" parent="."]
@@ -67,6 +82,19 @@ offset_left = 412.0
 offset_top = 159.0
 offset_right = 556.0
 offset_bottom = 179.0
+
+[node name="Zoom" type="HSlider" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 712.0
+offset_top = 600.0
+offset_right = 887.0
+offset_bottom = 616.0
+min_value = 1.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="LoadVideo" to="." method="_on_load_image_pressed"]
