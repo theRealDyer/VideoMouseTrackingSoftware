@@ -30,19 +30,28 @@ offset_bottom = 231.0
 
 [node name="LoadVideo" type="Button" parent="."]
 layout_mode = 0
-offset_left = -55.0
-offset_top = 50.0
-offset_right = 43.0
-offset_bottom = 81.0
+offset_left = -488.0
+offset_top = 262.0
+offset_right = -390.0
+offset_bottom = 293.0
 text = "Load video"
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
 offset_left = 21.0
 offset_top = 272.0
-offset_right = 62.0
+offset_right = 76.0
 offset_bottom = 303.0
 text = "Play"
+
+[node name="Stop" type="Button" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 272.0
+offset_right = 146.0
+offset_bottom = 303.0
+text = "Stop
+"
 
 [node name="Loop" type="CheckButton" parent="."]
 layout_mode = 0
@@ -51,6 +60,13 @@ offset_top = 273.0
 offset_right = 1.0
 offset_bottom = 304.0
 text = "Loop"
+
+[node name="DropDown" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 159.0
+offset_right = 556.0
+offset_bottom = 179.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="LoadVideo" to="." method="_on_load_image_pressed"]
