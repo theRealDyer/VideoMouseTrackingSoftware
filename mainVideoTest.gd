@@ -91,7 +91,11 @@ func _play_video() -> void:
 	else:
 		videoPlayer.paused = true
 		start.text = "Play"   # Change button text back to "Play" when paused
-
+	
+	# fill progress bar as timeline
+	$VideoProgressBar.va
+	
+	
 func _stop_video() -> void:
 	videoPlayer.stop()
 	# Load video frame but don't play until play button pressed

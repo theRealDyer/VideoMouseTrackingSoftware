@@ -118,9 +118,9 @@ show_percentage = false
 [node name="FrameRateSelect" type="SpinBox" parent="."]
 layout_mode = 0
 offset_left = 980.0
-offset_top = 598.0
+offset_top = 583.0
 offset_right = 1063.06
-offset_bottom = 629.0
+offset_bottom = 614.0
 max_value = 1000.0
 
 [node name="FramRateLabel" type="Label" parent="FrameRateSelect"]
