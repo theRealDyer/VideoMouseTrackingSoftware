@@ -8,6 +8,7 @@ extends Control
 @onready var loop = $Loop
 @onready var zoom = $Zoom
 @onready var boundPos = videoBounds.global_position
+@onready var exportJsonButton = $ExportJSON
 
 # Variables for moving zoomed video
 var dragging=false
@@ -19,7 +20,23 @@ func _ready():
 	start.connect("pressed", _play_video)
 	loop.connect("pressed", _loop_video)
 	stop.connect("pressed", _stop_video)
+	
+	exportJsonButton.connect("pressed", _export_json)
 
+# function to export json file upon button press
+func _export_json() -> void:
+	var json = JSON.new()
+	
+	# default `user://` export path:
+	# "C:\Users\{user}\AppData\Roaming\Godot\app_userdata\videoMouseTrackingSoftware"
+	var path = "user://exported_data.json"
+	
+	# mouse logging events
+	var data = {'key_james':'entry_james','key_jordan':'entry_jordan'}
+	
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(json.stringify(data))
+	print("success; json exported")
 
 	
 func _on_load_image_pressed() -> void:

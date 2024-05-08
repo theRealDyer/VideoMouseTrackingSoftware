@@ -74,6 +74,14 @@ offset_right = 465.0
 offset_bottom = 600.0
 text = "Loop"
 
+[node name="ExportJSON" type="Button" parent="."]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 569.0
+offset_right = 293.0
+offset_bottom = 600.0
+text = "Export JSON"
+
 [node name="DropDown" type="OptionButton" parent="."]
 layout_mode = 0
 offset_left = 980.0
