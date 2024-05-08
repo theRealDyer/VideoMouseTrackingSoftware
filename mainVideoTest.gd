@@ -8,6 +8,8 @@ extends Control
 @onready var loop = $Loop
 @onready var zoom = $Zoom
 @onready var boundPos = videoBounds.global_position
+@onready var exportJsonButton = $ExportJSON
+@onready var resolutionDropDown = $ResolutionDropDown
 
 # Variables for moving zoomed video
 var dragging=false
@@ -19,7 +21,33 @@ func _ready():
 	start.connect("pressed", _play_video)
 	loop.connect("pressed", _loop_video)
 	stop.connect("pressed", _stop_video)
+	exportJsonButton.connect("pressed", _export_json)
+	
+	# resolution options
+	var resolutions = [
+		"320x240", "640x480", "720x480", "720x576",
+		"800x600", "960x540", "1024x768", "1136x640",
+		"1280x720", "1366x768", "1600x900", "1920x1080",
+		"2048x1080", "2560x1080", "2560x1440", "3440x1440",
+		"3840x2160", "4096x2160", "5120x2880", "7680x4320"
+		]
+	for resolution in resolutions:
+		resolutionDropDown.add_item(resolution)
 
+# function to export json file upon button press
+func _export_json() -> void:
+	var json = JSON.new()
+	
+	# default `user://` export path:
+	# "C:\Users\{user}\AppData\Roaming\Godot\app_userdata\videoMouseTrackingSoftware"
+	var path = "user://exported_data.json"
+	
+	# mouse logging events
+	var data = {'key_james':'entry_james','key_jordan':'entry_jordan'}
+	
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(json.stringify(data))
+	print("success; json exported")
 
 	
 func _on_load_image_pressed() -> void:
@@ -63,7 +91,11 @@ func _play_video() -> void:
 	else:
 		videoPlayer.paused = true
 		start.text = "Play"   # Change button text back to "Play" when paused
-
+	
+	# fill progress bar as timeline
+	$VideoProgressBar.va
+	
+	
 func _stop_video() -> void:
 	videoPlayer.stop()
 	# Load video frame but don't play until play button pressed
