@@ -1,8 +1,7 @@
 # VideoMouseTrackingSoftware
 * quick GUI to track mouse movement as uploaded video plays
 
-* made for Jeffiot
-
+* made for [Jeffiot](https://www.youtube.com/@jeffiot)
 # Main structure:
 .exe, open
 - browse (import video)
