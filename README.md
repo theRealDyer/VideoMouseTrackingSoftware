@@ -2,7 +2,7 @@
 * quick GUI to track mouse movement as uploaded video plays
 
 * Made by Jordan Barber and James Dyer.
-* Dreamt up by Jeffiot.
+* Dreamt up by [Jeffiot](https://www.youtube.com/@jeffiot).
 
 # Main structure:
 .exe, open
