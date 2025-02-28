@@ -1,7 +1,8 @@
 # VideoMouseTrackingSoftware
 * quick GUI to track mouse movement as uploaded video plays
 
-* made for Jeffiot
+* Made by Jordan Barber and James Dyer.
+* Dreamt up by Jeffiot.
 
 # Main structure:
 .exe, open

@@ -21,7 +21,7 @@ func _ready():
 func _zoomed(scale_factor:float) -> void:
 	# increase the scale of the video
 	videoPlayer.scale=Vector2(scale_factor, scale_factor)
-	#print(videoPlayer.pivot_offset, videoPlayer.get_rect().position)
+	print(videoPlayer.pivot_offset, videoPlayer.get_rect().position)
 	
 	#### Keep video in frame
 	var minPos = self.get_rect().size - videoPlayer.get_rect().size
@@ -30,24 +30,15 @@ func _zoomed(scale_factor:float) -> void:
 	
 
 func _input(event):
-	
 	event = make_input_local(event) # convert to local coords
-	
-		# Mouse Wheel Zoom
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom.value += 0.5
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom.value -= 0.5
-			
 	if event is InputEventMouseButton:
 		if self.localRect.has_point(event.position) and \
 				event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			# Start dragging (Only if clicked on video space)
 			dragging=true
 			dragOffset=videoPlayer.position-event.position
-			#print()
-			#print(dragOffset)
+			print()
+			print(dragOffset)
 		else:
 			dragging=false # Stop dragging
 			
@@ -66,7 +57,7 @@ func _input(event):
 				
 
 			videoPlayer.position=newPos
-			#print(videoPlayer.pivot_offset)
+			print(videoPlayer.pivot_offset)
 
 			
 	if event.is_action_pressed("DEBUG"):
@@ -78,12 +69,4 @@ func _input(event):
 		var test = Vector2(-500, -300)
 		print(test.clamp(minPos, Vector2.ZERO))
 		
-
-# HELPER FUNCTIONS that mainVideoTest.gd calls
-func get_view_center() -> Vector2:
-	# Because pivot_offset = size/2, the video’s "position" is basically
-	# the center of the video in local coords.
-	return videoPlayer.position
-
-func get_zoom_percentage() -> float:
-	return videoPlayer.scale.x
+		

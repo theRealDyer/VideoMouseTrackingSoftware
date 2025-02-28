@@ -94,7 +94,7 @@ layout_mode = 0
 offset_top = -24.0
 offset_right = 83.0
 offset_bottom = -1.0
-text = "Resolution"
+text = "Resolution (pixels)"
 
 [node name="Zoom" type="HSlider" parent="."]
 layout_mode = 0
@@ -113,7 +113,7 @@ offset_left = 418.0
 offset_top = 514.0
 offset_right = 732.0
 offset_bottom = 544.0
-show_percentage = false
+max_value = 1.0
 
 [node name="FrameRateSelect" type="SpinBox" parent="."]
 layout_mode = 0
@@ -122,13 +122,23 @@ offset_top = 583.0
 offset_right = 1063.06
 offset_bottom = 614.0
 max_value = 1000.0
+value = 30.0
 
 [node name="FramRateLabel" type="Label" parent="FrameRateSelect"]
 layout_mode = 0
 offset_top = -25.0
 offset_right = 86.0
 offset_bottom = -2.0
-text = "Frame rate"
+text = "Frame rate (/s)"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 871.0
+offset_top = 8.0
+offset_right = 1136.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 14
+text = "Made by Jordan Barber and James Dyer"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="LoadVideo" to="." method="_on_load_image_pressed"]
