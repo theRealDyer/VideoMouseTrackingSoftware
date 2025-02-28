@@ -1,7 +1,9 @@
 # VideoMouseTrackingSoftware
 * quick GUI to track mouse movement as uploaded video plays
 
-* made for [Jeffiot](https://www.youtube.com/@jeffiot)
+* Made by Jordan Barber and James Dyer.
+* Dreamt up by [Jeffiot](https://www.youtube.com/@jeffiot).
+
 # Main structure:
 .exe, open
 - browse (import video)
